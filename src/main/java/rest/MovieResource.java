@@ -14,11 +14,17 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import entities.Movie;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
 
 //Todo Remove or change relevant parts before ACTUAL use
 @Path("Cinema")
 public class MovieResource {
 
+    
+    @Context
+    private UriInfo context;
+    
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
     
     //An alternative way to get the EntityManagerFactory, whithout having to type the details all over the code
