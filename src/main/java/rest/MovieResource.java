@@ -13,12 +13,13 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import entities.Movie;
+import javax.persistence.Persistence;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
 //Todo Remove or change relevant parts before ACTUAL use
-@Path("Cinema")
+@Path("movie")
 public class MovieResource {
 
     
@@ -30,7 +31,9 @@ public class MovieResource {
     //An alternative way to get the EntityManagerFactory, whithout having to type the details all over the code
     //EMF = EMF_Creator.createEntityManagerFactory(DbSelector.DEV, Strategy.CREATE);
     
-    private static final MovieFacade FACADE =  MovieFacade.getFacadeExample(EMF);
+    static EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu"); 
+    MovieFacade facade =  MovieFacade.getFacadeExample(emf);
+    
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     
     private static List<MovieDTO> movies = new ArrayList();

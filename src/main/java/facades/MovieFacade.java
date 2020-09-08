@@ -19,6 +19,18 @@ public class MovieFacade {
     //Private Constructor to ensure Singleton
     private MovieFacade() {}
     
+    public void populateDB(){
+            EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(new Movie(1986, "Topgun", new String[]{"Tom Cruise", "Val Kilmer","Kelly McGills"}));
+            em.persist(new Movie(2003, "Kill Bill", new String[]{"Uma Thurman", "Daryl Hannah"}));
+            em.persist(new Movie(1991, "Point Break", new String[]{"Patrick Swayze", "Keanu Reeves"}));
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+    }
     
     public Movie getMovieByTitel(String titel){
          EntityManager em = emf.createEntityManager();
@@ -40,6 +52,7 @@ public class MovieFacade {
             em.close();
         }
     }
+    
     
     public Movie getOldestMovie(int year){
          EntityManager em = emf.createEntityManager();

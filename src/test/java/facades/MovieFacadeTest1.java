@@ -1,31 +1,43 @@
 package facades;
-/*
-import utils.EMF_Creator;
+
+import entities.Movie;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import org.junit.Assert;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-*/
+import utils.EMF_Creator;
+
+
 
 //Uncomment the line below, to temporarily disable this test
 //@Disabled
-public class FacadeExampleTest {
-    /*
+public class MovieFacadeTest1 {
+    
 
     private static EntityManagerFactory emf;
     private static MovieFacade facade;
+    private static Movie emp1;
+    private static Movie emp2;
+    private static Movie emp3;
 
-    public FacadeExampleTest() {
+    public MovieFacadeTest1() {
     }
 
     @BeforeAll
     public static void setUpClass() {
        emf = EMF_Creator.createEntityManagerFactoryForTest();
        facade = MovieFacade.getFacadeExample(emf);
+       
+       
+       
     }
 
     @AfterAll
@@ -37,18 +49,6 @@ public class FacadeExampleTest {
     //TODO -- Make sure to change the script below to use YOUR OWN entity class
     @BeforeEach
     public void setUp() {
-        /*
-        EntityManager em = emf.createEntityManager();
-        try {
-            em.getTransaction().begin();
-            em.createNamedQuery("RenameMe.deleteAllRows").executeUpdate();
-            em.persist(new Movie("Some txt", "More text"));
-            em.persist(new Movie("aaa", "bbb"));
-
-            em.getTransaction().commit();
-        } finally {
-            em.close();
-        }
 
     }
 
@@ -58,11 +58,27 @@ public class FacadeExampleTest {
     }
 
     // TODO: Delete or change this method 
+    
+    /*
+    getMovieByTitel
+    getAllMovies
+    getOldestMovie
+    */
+    
     @Test
-    public void testAFacadeMethod() {
+    public void getMovieByTitel() {
+        String titel = "Månen";
+        String exp = "Månen";
+        String result = facade.getMovieByTitel(titel).getTitle();
         
-        assertEquals(2, facade.getRenameMeCount(), "Expects two rows in the database");
-
+        Assert.assertEquals(exp, result);
     }
-*/
+    
+    @Test
+    public void getAllMovies() {
+        
+        
+        
+    }
+
 }
