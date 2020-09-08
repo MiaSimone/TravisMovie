@@ -13,7 +13,9 @@ import javax.persistence.NamedQuery;
 @NamedQueries({
 @NamedQuery(name = "Movie.deleteAllRows", query = "DELETE from Movie"),
 @NamedQuery(name = "Movie.getAll", query = "SELECT m FROM Movie m"),
-@NamedQuery(name = "Movie.getByName", query = "SELECT m FROM Movie m WHERE m.name LIKE :name")
+@NamedQuery(name = "Movie.getByTitle", query = "SELECT m FROM Movie m WHERE m.title LIKE :title"),
+@NamedQuery(name = "Movie.getOldestMovie", query = "SELECT m FROM Movie m WHERE m.year LIKE :year")
+        
 })
 public class Movie implements Serializable {
 
@@ -25,6 +27,11 @@ public class Movie implements Serializable {
     private String title;
     private String[] actors;
 
+    public Movie() {
+    }
+
+    
+    
     public Movie(int year, String title, String[] actors) {
         this.year = year;
         this.title = title;

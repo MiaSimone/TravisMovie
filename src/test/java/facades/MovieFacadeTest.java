@@ -1,85 +1,96 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package facades;
 
+import utils.EMF_Creator;
 import entities.Movie;
-import java.util.List;
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-/**
- *
- * @author miade
- */
+
+
+//Uncomment the line below, to temporarily disable this test
+//@Disabled
+
 public class MovieFacadeTest {
     
+
+    private static EntityManagerFactory emf;
+    private static MovieFacade facade;
+    private final Movie m1 = new Movie(2014, "Maze Runner", new String[]{"Dylan O'Brien", "Thomas Sangster", "Kaya Scodelario"});
+    private final Movie m2 = new Movie(1975, "Olsenbanden slår igen", new String[]{"Egon Olsen","Kjeld"});
+    private final Movie m3 = new Movie(2010, "Burlesque", new String[]{"Christina Aguilera","Cher"});
+     
     public MovieFacadeTest() {
     }
-    
-    @BeforeClass
+
+    @BeforeAll
     public static void setUpClass() {
+       emf = EMF_Creator.createEntityManagerFactoryForTest();
+       facade = MovieFacade.getFacadeExample(emf);
     }
-    
-    @AfterClass
+
+    @AfterAll
     public static void tearDownClass() {
+//        Clean up database after test is done or use a persistence unit with drop-and-create to start up clean on every test
     }
-    
-    @Before
+
+    // Setup the DataBase in a known state BEFORE EACH TEST
+    //TODO -- Make sure to change the script below to use YOUR OWN entity class
+    @BeforeEach
     public void setUp() {
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+                em.createNamedQuery("Movie.deleteAllRows").executeUpdate();
+                em.persist(m1);
+                em.persist(m2);
+                em.persist(m3);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
     }
-    
-    @After
+
+    @AfterEach
     public void tearDown() {
+//        Remove any data after each test was run
     }
 
+    /*
+    getMovieByTitel
+    getAllMovies
+    getOldestMovie
+    
+    */
     @Test
-    public void testGetMovieByTitel() {
-        System.out.println("getMovieByTitel");
-        String titel = "";
-        MovieFacade instance = null;
-        Movie expResult = null;
-        Movie result = instance.getMovieByTitel(titel);
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
-    }
-
-    @Test
-    public void testGetAllMovies() {
-        System.out.println("getAllMovies");
-        MovieFacade instance = null;
-        List<Movie> expResult = null;
-        List<Movie> result = instance.getAllMovies();
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
-    }
-
-    @Test
-    public void testGetOldestMovie() {
-        System.out.println("getOldestMovie");
-        int year = 0;
-        MovieFacade instance = null;
-        Movie expResult = null;
-        Movie result = instance.getOldestMovie(year);
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
-    }
-
-    @Test
-    public void testGetFacadeExample() {
-        System.out.println("getFacadeExample");
-        EntityManagerFactory _emf = null;
-        MovieFacade expResult = null;
-        MovieFacade result = MovieFacade.getFacadeExample(_emf);
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+    public void getMovieByTitel() {
+        String titel = "Maze Runner";
+        String exp = "Maze Runner";
+        String result = facade.getMovieByTitle(titel).getTitle();
+        
+        assertEquals(exp, result);
     }
     
+    @Test
+    public void getAllMovies() {
+        int exp = 3;
+        int result = facade.getAllMovies().size();
+        
+        assertEquals(exp, result);
+    }
+    
+    @Test
+    public void getOldestMovie() {
+        String exp = "Olsenbanden slår igen";
+        String result = facade.getOldestMovie(1975).getTitle();
+        
+        assertEquals(exp, result);
+    }
+    
+
 }

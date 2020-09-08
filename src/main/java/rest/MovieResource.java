@@ -13,6 +13,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import entities.Movie;
+import java.util.Collections;
 import javax.persistence.Persistence;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
@@ -23,38 +24,52 @@ import javax.ws.rs.core.UriInfo;
 public class MovieResource {
 
     
+    /*
+    /api/movie/all
+    /api/movie/titel/{titel}
+    /api/movie/oldestMovie
+    */
+    
     @Context
     private UriInfo context;
     
-    private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
-    
-    //An alternative way to get the EntityManagerFactory, whithout having to type the details all over the code
-    //EMF = EMF_Creator.createEntityManagerFactory(DbSelector.DEV, Strategy.CREATE);
-    
+    private static Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+//NOTE: Change Persistence unit name according to your setup
     static EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu"); 
     MovieFacade facade =  MovieFacade.getFacadeExample(emf);
     
-    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-    
     private static List<MovieDTO> movies = new ArrayList();
-            
-    
+
     public MovieResource() {
         if (movies.isEmpty()){
-            movies.add(new MovieDTO(new Movie(1979, "Månen", new String[]{"Johnny Depp", "Carol"})));
-            movies.add(new MovieDTO(new Movie(2016, "Maze Runner", new String[]{"Dylan O'brien", "Eyebrow Guy"})));
-            movies.add(new MovieDTO(new Movie(1999, "Kaffe", new String[]{"Inge", "Bertil"})));
+            movies.add(new MovieDTO(
+                    new Movie(2014, "Maze Runner", new String[]{"Dylan O'Brien", "Thomas Sangster", "Kaya Scodelario"})));
+            movies.add(new MovieDTO(new Movie(1975, "Olsenbanden slår igen", new String[]{"Egon Olsen","Kjeld"})));
+            movies.add(new MovieDTO(new Movie(2010, "Burlesque", new String[]{"Christina Aguilera","Cher"})));
         }
     }
     
-    @Path("allMovies")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public String demo() {
+        return "{\"msg\":\"Hello World\"}";
+    }
+    
+    @GET
+    @Path("/populate")
+    @Produces({MediaType.APPLICATION_JSON})
+    public String populate() {
+        facade.populateDB();
+        return "{\"msg\":\"3 rows added\"}";
+    }
+
+    @Path("all")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getJson() {
         String jsonString = GSON.toJson(movies);
         return jsonString;
     }
-    
     
     @Path("/titel/{titel}")
     @GET
@@ -86,13 +101,12 @@ public class MovieResource {
     public String findOldestPerson() {
         MovieDTO oldest = null;
         for (MovieDTO m : movies) {
-            if (oldest == null || m.getYear() > oldest.getYear()){
+            if (oldest == null || m.getYear() < oldest.getYear()){
                 oldest = m;
             }    
         }
         String jsonString = GSON.toJson(oldest.getMovie());
         return jsonString;
     }
-    
     
 }

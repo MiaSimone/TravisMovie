@@ -1,10 +1,12 @@
 package facades;
 
 import entities.Movie;
+import java.math.BigDecimal;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
@@ -32,6 +34,20 @@ public class MovieFacade {
         }
     }
     
+    public Movie getMovieByTitle(String title){
+        EntityManager em = emf.createEntityManager();
+        try {
+              Query query = em.createNamedQuery("Movie.getByTitle");
+              query.setParameter("title", title);
+              Movie movie = (Movie) query.getSingleResult();
+              return movie;
+        }         
+        finally {
+            em.close();
+        }  
+    }
+    
+    /*
     public Movie getMovieByTitel(String titel){
          EntityManager em = emf.createEntityManager();
         try{
@@ -41,6 +57,7 @@ public class MovieFacade {
             em.close();
         }
     }
+    */
     
     public List<Movie> getAllMovies(){
          EntityManager em = emf.createEntityManager();
@@ -53,13 +70,33 @@ public class MovieFacade {
         }
     }
     
-    
     public Movie getOldestMovie(int year){
+        EntityManager em = emf.createEntityManager();
+        try {
+              Query query = em.createNamedQuery("Movie.getOldestMovie");
+              query.setParameter("year", year);
+              Movie movie = (Movie) query.getSingleResult();
+              return movie;
+        }         
+        finally {
+            em.close();
+        }
+    }
+    
+    /*
+    public Movie getOldestMovie(){
          EntityManager em = emf.createEntityManager();
         try{
+            Query query2 = em.createQuery("Select MIN(m.year) FROM Movie m");
+            int year = (int) query2.getSingleResult();
+            
             TypedQuery<Movie> query = 
-                       em.createQuery("SELECT m FROM Movie m WHERE min(m.year)",Movie.class);
-            return query.getSingleResult();
+                       em.createQuery("SELECT m FROM Movie m WHERE m.year :year",Movie.class);
+            
+            query.setParameter("year", year);
+            Movie m = (Movie)query.getSingleResult();
+            
+            return m;
         }finally {
             em.close();
         }
