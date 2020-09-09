@@ -120,7 +120,7 @@ public class MovieResourceTest {
         .get("/movie/title/Burlesque").then()
         .assertThat()
         .statusCode(HttpStatus.OK_200.getStatusCode())
-        .body("[0].title", equalTo(m3.getTitle()));
+        .body("all[0].title", equalTo(m3.getTitle()));
     }
 
     @Test

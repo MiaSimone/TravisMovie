@@ -3,6 +3,7 @@ package rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dto.MovieDTO;
+import dto.MoviesDTO;
 import facades.MovieFacade;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
@@ -72,7 +73,8 @@ public class MovieResource {
     @Produces({MediaType.APPLICATION_JSON})
     public String getMovieByName(@PathParam("title") String title) {
         List<Movie> movieList = FACADE.getMovieByTitle(title);
-        return GSON.toJson(movieList);
+        MoviesDTO movieListDTO = new MoviesDTO(movieList);
+        return GSON.toJson(movieListDTO);
     }
     
     @Path("oldestMovie")
@@ -87,7 +89,8 @@ public class MovieResource {
                 oldest = m;
             }    
         }
-        return GSON.toJson(oldest);
+        MovieDTO oldestDTO = new MovieDTO(oldest);
+        return GSON.toJson(oldestDTO);
     }
     
 }
