@@ -2,6 +2,7 @@ package facades;
 
 import utils.EMF_Creator;
 import entities.Movie;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.AfterAll;
@@ -73,8 +74,8 @@ public class MovieFacadeTest {
     public void getMovieByTitel() {
         String titel = "Maze Runner";
         String exp = "Maze Runner";
-        String result = facade.getMovieByTitle(titel).getTitle();
-        
+        List<Movie> resultList = facade.getMovieByTitle(titel);
+        String result = resultList.get(0).getTitle();
         assertEquals(exp, result);
     }
     

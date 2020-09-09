@@ -117,10 +117,10 @@ public class MovieResourceTest {
         System.out.println("Testing getting SPECIFIC MOVIE");
         given()
         .contentType("application/json")
-        .get("/movie/titel/Burlesque").then()
+        .get("/movie/title/Burlesque").then()
         .assertThat()
         .statusCode(HttpStatus.OK_200.getStatusCode())
-        .body("title", equalTo(m3.getTitle()));
+        .body("[0].title", equalTo(m3.getTitle()));
     }
 
     @Test

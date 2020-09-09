@@ -11,11 +11,10 @@ import javax.persistence.NamedQuery;
 
 @Entity
 @NamedQueries({
-@NamedQuery(name = "Movie.deleteAllRows", query = "DELETE from Movie"),
-@NamedQuery(name = "Movie.getAll", query = "SELECT m FROM Movie m"),
-@NamedQuery(name = "Movie.getByTitle", query = "SELECT m FROM Movie m WHERE m.title LIKE :title"),
-@NamedQuery(name = "Movie.getOldestMovie", query = "SELECT m FROM Movie m WHERE m.year LIKE :year")
-        
+    @NamedQuery(name = "Movie.deleteAllRows", query = "DELETE from Movie"),
+    @NamedQuery(name = "Movie.getAll", query = "SELECT m FROM Movie m"),
+    @NamedQuery(name = "Movie.getByTitle", query = "SELECT m FROM Movie m WHERE m.title LIKE :title"),
+    @NamedQuery(name = "Movie.getOldestMovie", query = "SELECT m FROM Movie m WHERE m.year LIKE :year")
 })
 public class Movie implements Serializable {
 

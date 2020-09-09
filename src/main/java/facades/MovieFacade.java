@@ -1,11 +1,9 @@
 package facades;
 
 import entities.Movie;
-import java.math.BigDecimal;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
@@ -34,13 +32,13 @@ public class MovieFacade {
         }
     }
     
-    public Movie getMovieByTitle(String title){
+     public List<Movie> getMovieByTitle(String title){
         EntityManager em = emf.createEntityManager();
         try {
               Query query = em.createNamedQuery("Movie.getByTitle");
               query.setParameter("title", title);
-              Movie movie = (Movie) query.getSingleResult();
-              return movie;
+              List<Movie> movieList = query.getResultList();
+              return movieList;
         }         
         finally {
             em.close();
