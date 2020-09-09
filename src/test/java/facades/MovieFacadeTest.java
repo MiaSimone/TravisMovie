@@ -33,13 +33,8 @@ public class MovieFacadeTest {
        emf = EMF_Creator.createEntityManagerFactoryForTest();
        facade = MovieFacade.getFacadeExample(emf);
     }
-
-    @AfterAll
-    public static void tearDownClass() {
-//        Clean up database after test is done or use a persistence unit with drop-and-create to start up clean on every test
-    }
-
-    // Setup the DataBase in a known state BEFORE EACH TEST
+    
+       // Setup the DataBase in a known state BEFORE EACH TEST
     //TODO -- Make sure to change the script below to use YOUR OWN entity class
     @BeforeEach
     public void setUp() {
@@ -55,6 +50,13 @@ public class MovieFacadeTest {
             em.close();
         }
     }
+
+    @AfterAll
+    public static void tearDownClass() {
+//        Clean up database after test is done or use a persistence unit with drop-and-create to start up clean on every test
+    }
+
+ 
 
     @AfterEach
     public void tearDown() {
