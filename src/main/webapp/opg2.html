@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <style>
+            .mydiv {
+                width: 70px; 
+                height: 25px;
+                background-color:yellow; 
+                margin:3px;
+            }
+        </style>
+        
+    </head>
+    <body>
+        <h3>Event Bubbling and event arguments</h3>
+        
+        <div id="id1" class="mydiv"></div>
+        <div id="id2" class="mydiv"></div>
+        
+        <br>
+        <button onclick="id1()">Button for id 1</button>
+        <button onclick="id2()">Button for id 2</button>
+        <br>
+        
+        
+        <!-- Værdien af id'et skal skrives ud-->
+        <div id="outer">
+            <div class="mydiv" id="1">Tryk her!</div>
+            <div class="mydiv" id="2">Tryk her!</div>
+            <div class="mydiv" id="3">Tryk her!</div>
+            <div class="mydiv" id="4">Tryk her!</div>
+            <div class="mydiv" id="5">Tryk her!</div>
+            <div class="mydiv" id="6">Tryk her!</div>
+            <div class="mydiv" id="7">Tryk her!</div>
+            <div class="mydiv" id="8">Tryk her!</div>
+            <div class="mydiv" id="9">Tryk her!</div>
+            <div class="mydiv" id="10">Tryk her!</div>
+        </div>
+        
+        <p id=udskrift></p>
+        
+        <script>
+            
+            function id1() {
+                var element = document.getElementById("id1");
+                element.innerHTML = "Hi from " + element.id;
+            }
+            function id2() {
+                var element = document.getElementById("id2");
+                element.innerHTML = "Hi from " + element.id;
+            }
+            
+            const idElement = document.getElementById("outer");
+            idElement.addEventListener('click', function (event){
+                document.getElementById("udskrift").innerHTML =
+                    "Hi from " + event.target.id;
+            })
+            
+        </script>
+        
+        
+    </body>
+</html>

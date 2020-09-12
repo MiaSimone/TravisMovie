@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <br>
+        <div id="names"></div>
+        <br>
+        
+        <input type="text" id="name">
+        <button onclick="add()">Add name</button>
+        <button onclick="removeF()">Remove first</button>
+        <button onclick="removeL()">Remove last</button>
+    </body>
+    
+    
+    <script>  
+        var newNames = ["Lars", "Peter", "Jan", "Ian"];
+        
+        var html = newNames.map(n => "<li>"+n+"</li>");
+        
+        var htmlString = "<ul>" + html.join('') + "</ul>";
+            
+        document.getElementById("names").innerHTML = htmlString;    
+        
+        function add(){
+            var name = document.getElementById("name");
+            newNames.push(name.value);
+            
+            var html = newNames.map(n => "<li>"+n+"</li>");
+            var htmlString = "<ul>" + html.join('') + "</ul>";
+            
+            document.getElementById("names").innerHTML = htmlString;
+        };
+        
+        function removeF(){
+            newNames.shift(document.getElementById("name").value);
+            var html = newNames.map(n => "<li>"+n+"</li>");
+            var htmlString = "<ul>" + html.join('') + "</ul>";
+            
+            document.getElementById("names").innerHTML = htmlString;
+        };
+        
+        function removeL(){
+            newNames.pop(document.getElementById("name").value);
+            var html = newNames.map(n => "<li>"+n+"</li>");
+            var htmlString = "<ul>" + html.join('') + "</ul>";
+            
+            document.getElementById("names").innerHTML = htmlString;
+            
+        };
+        
+    </script>
+    
+</html>

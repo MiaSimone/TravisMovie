@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Link to make bootstrap coulumns: -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        
+        
+        <style>
+            #container{
+                width: 226px;
+                height: 274px;
+                border: 3px solid darkblue;
+                margin: auto
+            }
+            .t1, .t4{
+                border: 1px solid black;
+                height: 48px;
+                margin-left: 3px;
+                margin-top: 3px;
+                display: inline-block;
+                text-align: center;
+                line-height: 48px;
+            }
+            .t1{
+                width: 48px;
+            }
+            .t4{
+                width: 219px;
+            }
+        </style>
+
+        
+    </head>
+    <body>
+        <div class="container">
+            <h3>Calculator:</h3>
+            <div class="row">
+                <div class="col-sm-6">
+                    <p>This is just a demonstration of a calculator. </p>
+                    <p>You must only enter ONE number on each side of the math sign, like this: </p>
+                    <p>1+2</p>
+                    <p>6-3</p>
+                    <p>3*9</p>
+                    <p>4/2</p>
+                    <p>Press C to clear the calculator.</p>
+                </div>
+
+                <div class="col-sm-6">
+                    <div id="container">
+                        <div id="display" class="t4"></div>
+                        <div id="buttons">
+                          <div class="t1">7</div>
+                          <div class="t1">8</div>
+                          <div class="t1">9</div>
+                          <div class="t1">/</div>
+
+                          <div class="t1">4</div>
+                          <div class="t1">5</div>
+                          <div class="t1">6</div>
+                          <div class="t1">*</div>
+
+                          <div class="t1">1</div>
+                          <div class="t1">2</div>
+                          <div class="t1">3</div>
+                          <div class="t1">-</div>
+
+                          <div class="t1">0</div>
+                          <div id="clear" class="t1">C</div>
+                          <div class="t1">+</div>
+                          <div id="calculate" class="t1">=</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+    </body>
+    
+    <!-- splitte string op og sige hvis det er + skal den køre metoden plus() osv. -->
+    
+    <script>
+        const idElement = document.getElementById("buttons");
+        idElement.addEventListener('click', function (event){
+            document.getElementById("display").innerHTML += event.target.innerText;
+        });
+        
+        const idElement2 = document.getElementById("calculate");
+        
+        
+        idElement2.addEventListener('click', function (event){
+            event.stopPropagation();
+            var d = document.getElementById("display").innerHTML;
+            
+            var splits = d.split('');
+            
+            var filtered = splits[0].replace(/\D+/g, ' ').trim().split(' ').map(e => parseInt(e))
+            var filtered2 = splits[2].replace(/\D+/g, ' ').trim().split(' ').map(e => parseInt(e))
+            var n1 = filtered[0];
+            var n2 = filtered2[0];
+            
+            if (splits.indexOf('+') === 1 ){
+                document.getElementById("display").innerHTML = plus(n1,n2);
+            } else if (splits.indexOf('-') === 1){
+                document.getElementById("display").innerHTML = minus(n1,n2);
+            } else if (splits.indexOf('*') === 1){
+                document.getElementById("display").innerHTML = gange(n1,n2);
+            } else if (splits.indexOf('/') === 1){
+                document.getElementById("display").innerHTML = dividerer(n1,n2);
+            } else 
+                document.getElementById("display").innerHTML = "NOPE";
+        });
+        
+        const idElement3 = document.getElementById("clear");
+        
+        idElement3.addEventListener('click', function (event){
+            event.stopPropagation();
+            document.getElementById("display").innerHTML = "";
+        });
+        
+        
+        function plus(n1, n2){
+            if (typeof n1 !== "number" || typeof n1 === "undefined")
+                return "n1 is not a number";
+            else if (typeof n2 !== "number" || typeof n2 === "undefined")
+                return "n2 is not a number";
+            else 
+            return n1 + n2;
+        }
+        
+        function minus(n1, n2){
+            if (typeof n1 !== "number" || typeof n1 === "undefined")
+                return "n1 is not a number";
+            else if (typeof n2 !== "number" || typeof n2 === "undefined")
+                return "n2 is not a number";
+            else 
+            return n1 - n2;
+        }
+        
+        function gange(n1, n2){
+            if (typeof n1 !== "number" || typeof n1 === "undefined")
+                return "n1 is not a number";
+            else if (typeof n2 !== "number" || typeof n2 === "undefined")
+                return "n2 is not a number";
+            else 
+            return n1*n2;
+        }
+        
+        function dividerer(n1, n2){
+            if (typeof n1 !== "number" || typeof n1 === "undefined")
+                return "n1 is not a number";
+            else if (typeof n2 !== "number" || typeof n2 === "undefined")
+                return "n2 is not a number";
+            else 
+            return n1/n2;
+        }
+        
+    </script>
+    
+</html>

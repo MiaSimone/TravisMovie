@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    </head>
+    <body>
+        <h3>Cars:</h3>
+        
+        
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Year</th>
+                <th scope="col">Make</th>
+                <th scope="col">Model</th>
+                <th scope="col">Price</th>
+              </tr>
+            </thead>
+            
+            <tbody id="tbody"></tbody>
+            
+        </table>
+        
+        
+            <br>
+            Price: <input type="text" id="price">
+            <button onclick="price()">Price less than</button>
+            
+            <p id="test"></p>
+        
+    </body>
+    <script>
+        var cars = [
+            { id: 1, year: 1997, make: 'Ford', model: 'E350', price: 3000 },
+            { id: 2, year: 1999, make: 'Chevy', model: 'Venture', price: 4900 },
+            { id: 3, year: 2000, make: 'Chevy', model: 'Venture', price: 5000 },
+            { id: 4, year: 1996, make: 'Jeep', model: 'Grand Cherokee', price: 4799 },
+            { id: 5, year: 2005, make: 'Volvo', model: 'V70', price: 44799 }
+        ];
+        
+            var html = cars.map(car => "<tr><td>"+car.id+"</td>\n\
+                <td>"+car.year+"</td>\n\
+                <td>"+car.make+"</td>\n\
+                <td>"+car.model+"</td>\n\
+                <td>"+car.price+"</td></tr>");
+            document.getElementById("tbody").innerHTML = html;    
+        
+        function filter_price(car) {
+            var number = document.getElementById("price");
+            return car.price < number.value;
+        }
+        function price(){
+            var newCars = cars.filter(filter_price);
+            
+            var html = newCars.map(newCar => "<tr><td>"+newCar.id+"</td>\n\
+                <td>"+newCar.year+"</td>\n\
+                <td>"+newCar.make+"</td>\n\
+                <td>"+newCar.model+"</td>\n\
+                <td>"+newCar.price+"</td></tr>");
+            document.getElementById("tbody").innerHTML = html;
+        }
+        
+        
+        
+    </script>    
+    
+</html>
